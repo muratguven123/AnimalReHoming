@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+    <nav th:replace="fragments/header :: nav"></nav>
+    
+    <main>
+        <section class="hero">
+            <h1>Find Your Perfect Companion</h1>
+            <p>Give a loving home to animals in need</p>
+            <a th:href="@{/animals}" class="cta-button">Browse Animals</a>
+        </section>
+    </main>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

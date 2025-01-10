@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <title>Animal ReHoming</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<nav th:fragment="nav">
+    <div class="nav-logo">Animal ReHoming</div>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/animals}">Animals</a></li>
+        <li><a th:href="@{/shelters}">Shelters</a></li>
+        <li><a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a></li>
+        <li><a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a></li>
+    </ul>
+</nav>
