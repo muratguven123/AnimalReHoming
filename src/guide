@@ -1,0 +1,159 @@
+// Proje: Hayvan Sahiplendirme Platformu - React Frontend
+// Proje Rehberi
+
+// 1. Gerekli React Bağımlılıkları
+// -----------------------------
+// React ve React DOM'un yanı sıra proje için aşağıdaki bağımlılıkları yükleyin:
+// npm install react-router-dom axios @mui/material @mui/icons-material
+
+// 2. Proje Yapılandırması
+// -----------------------
+// Proje klasör yapısını aşağıdaki gibi oluşturabilirsiniz:
+
+/*
+src/
+├── components/
+│   ├── Header.js         // Uygulama başlık ve menü bileşeni
+│   ├── Footer.js         // Sayfa alt bilgi bileşeni
+│   ├── SearchBar.js      // Arama çubuğu bileşeni
+│   └── AnimalCard.js     // Hayvan kart tasarımı
+│
+├── pages/
+│   ├── Home.js           // Ana sayfa
+│   ├── Login.js          // Giriş sayfası
+│   ├── Register.js       // Kayıt sayfası
+│   ├── AnimalList.js     // Hayvan listesi
+│   ├── AnimalDetails.js  // Hayvan detayları
+│   ├── CaretakerForm.js  // Bakıcı ekleme sayfası
+│   └── Rewards.js        // Ödüller sayfası
+│
+├── services/
+│   ├── api.js            // Backend bağlantı servisleri
+│
+├── App.js                // Uygulamanın ana bileşeni
+├── index.js              // React DOM render işlemi
+└── styles.css            // Genel CSS dosyası
+*/
+
+// 3. React Router ile Sayfa Yönlendirme
+// ------------------------------------
+// React Router'ı kullanarak aşağıdaki rotaları oluşturun:
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import AnimalList from './pages/AnimalList';
+import AnimalDetails from './pages/AnimalDetails';
+import CaretakerForm from './pages/CaretakerForm';
+import Rewards from './pages/Rewards';
+
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/animals" element={<AnimalList />} />
+        <Route path="/animals/:id" element={<AnimalDetails />} />
+        <Route path="/add-caretaker" element={<CaretakerForm />} />
+        <Route path="/rewards" element={<Rewards />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
+
+// 4. Backend API ile Entegrasyon
+// -----------------------------
+// Axios ile backend API'yi bağlayın. `services/api.js` dosyasını oluşturun:
+
+; import axios from 'axios';
+
+; const API_BASE_URL = 'http://localhost:8080'; // Backend URL'si
+
+; export const getAnimals = () => axios.get(`${API_BASE_URL}/animals`);
+; export const getAnimalById = (id) => axios.get(`${API_BASE_URL}/animals/${id}`);
+; export const addCaretaker = (caretakerData) => axios.post(`${API_BASE_URL}/caretakers`, caretakerData);
+; export const getRewards = () => axios.get(`${API_BASE_URL}/rewards`);
+
+; // 5. Sayfa Tasarımları ve Fonksiyonları
+; // -----------------------------------
+
+; // Home.js
+; import React from 'react';
+
+; const Home = () => {
+;   return (
+;     <div>
+;       <h1>Hayvan Sahiplendirme Platformuna Hoş Geldiniz</h1>
+;       <p>Barınak dostlarımızı sahiplenmek için kayıt olun!</p>
+;     </div>
+;   );
+; };
+
+; export default Home;
+
+; // Login.js
+; import React, { useState } from 'react';
+
+; const Login = () => {
+;   const [email, setEmail] = useState('');
+;   const [password, setPassword] = useState('');
+
+;   const handleSubmit = (e) => {
+;     e.preventDefault();
+;     console.log({ email, password });
+;   };
+
+;   return (
+;     <form onSubmit={handleSubmit}>
+;       <h2>Giriş Yap</h2>
+;       <input
+;         type="email"
+;         placeholder="Email"
+;         value={email}
+;         onChange={(e) => setEmail(e.target.value)}
+;       />
+;       <input
+;         type="password"
+;         placeholder="Şifre"
+;         value={password}
+;         onChange={(e) => setPassword(e.target.value)}
+;       />
+;       <button type="submit">Giriş</button>
+;     </form>
+;   );
+; };
+
+; export default Login;
+
+; // AnimalList.js
+; import React, { useState, useEffect } from 'react';
+; import { getAnimals } from '../services/api';
+
+; const AnimalList = () => {
+;   const [animals, setAnimals] = useState([]);
+
+;   useEffect(() => {
+;     getAnimals().then((response) => setAnimals(response.data));
+;   }, []);
+
+;   return (
+;     <div>
+;       <h2>Hayvan Listesi</h2>
+;       <ul>
+;         {animals.map((animal) => (
+;           <li key={animal.id}>{animal.name}</li>
+;         ))}
+;       </ul>
+;     </div>
+;   );
+; };
+
+; export default AnimalList;
+
+; // Daha fazla sayfa ve bileşen için aynı mantıkta ilerleyebilirsiniz.
